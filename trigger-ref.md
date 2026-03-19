@@ -44,6 +44,7 @@ export const dailyReport = schedules.task({
 ```
 
 Common cron expressions:
+
 - `"*/30 * * * *"` — every 30 minutes
 - `"0 * * * *"` — every hour
 - `"0 */8 * * *"` — every 8 hours

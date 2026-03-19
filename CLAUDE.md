@@ -38,7 +38,7 @@ every step.
 
 ## Project Structure
 
-```
+```text
 src/trigger/{automation-name}/
   {task-name}.ts    ← simple automations can live in a single file
   {check-task}.ts   ← or split when there is a detection phase...
@@ -55,10 +55,12 @@ src/trigger/{automation-name}/
 - **Never log secret values** — `console.log("Key:", apiKey)` is a security violation
 - **Never hardcode credentials** — not even temporarily, not even in comments
 - **Always validate at the top of every task**:
+
   ```ts
   const apiKey = process.env.MY_API_KEY;
   if (!apiKey) throw new Error("MY_API_KEY is not set");
   ```
+  
 - **IDs and tokens from third-party services** (workspace IDs, channel IDs, etc.) — always read from env vars, never hardcode or fetch dynamically when a static value will do
 - **Before deploying**: add ALL env vars to Trigger.dev dashboard → Project → Environment
   Variables. Add to both staging and prod environments. This is the #1 cause of production failures.
@@ -81,7 +83,7 @@ src/trigger/{automation-name}/
 Always ask the user what frequency they want before choosing a cron. Common cron patterns:
 
 | Schedule | Cron |
-|---|---|
+| -- | -- |
 | Every 30 minutes | `"*/30 * * * *"` |
 | Every hour | `"0 * * * *"` |
 | Every 8 hours | `"0 */8 * * *"` |
@@ -96,7 +98,7 @@ When polling a feed on a schedule, set the lookback window slightly larger than 
 You have live Trigger.dev MCP tools. Prefer them over running CLI commands in the terminal:
 
 | What you need to do | MCP Tool |
-|---|---|
+| --- | --- |
 | Deploy to production | `mcp__trigger__deploy` |
 | Fire a test run | `mcp__trigger__trigger_task` |
 | Wait for a run to finish | `mcp__trigger__wait_for_run_to_complete` |
@@ -129,6 +131,7 @@ Wait for the user to say "push it", "deploy", "ship it", or similar before touch
 **Deploy**: push to `master` — GitHub Actions auto-deploys via `.github/workflows/deploy.yml`
 
 **After deploying:**
+
 - Use `mcp__trigger__list_runs` to confirm the first run succeeded
 - For scheduled tasks: check the Schedules tab in the dashboard to confirm the cron is registered
 - Do a manual test trigger from the dashboard or via `mcp__trigger__trigger_task`
